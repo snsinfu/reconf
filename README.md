@@ -1,6 +1,7 @@
 # reconf: Generate config file and run command
 
 [![Test Status][test-badge]][test-url]
+[![Release][release-badge]][release-url]
 
 `reconf` generates files from templates and executes a command using
 environment variables.
@@ -14,6 +15,8 @@ server.conf is created and the server starts
 
 [test-badge]: https://github.com/snsinfu/reconf/workflows/test/badge.svg
 [test-url]: https://github.com/snsinfu/reconf/actions?query=workflow%3Atest
+[release-badge]: https://img.shields.io/github/release/snsinfu/reconf.svg
+[release-url]: https://github.com/snsinfu/reconf/releases
 
 
 ## Build
