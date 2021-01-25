@@ -19,12 +19,16 @@ environment variables.
 
 ## Build
 
+Requires a Go compiler. The following command builds `reconf` executable:
+
 ```console
 $ go build -o reconf github.com/snsinfu/reconf
 ```
 
 
 ## Usage
+
+`reconf` is a statically-built CLI utility. It accepts the following flags:
 
 ```
 Usage: reconf [-f -w <file> ...] <command>...
