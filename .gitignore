@@ -4,4 +4,4 @@ _*
 !.gitignore
 !.github
 
-/reconf
+reconf

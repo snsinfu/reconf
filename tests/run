@@ -1,0 +1,29 @@
+#!/bin/sh -e
+
+cd "$(dirname "$0")"
+
+echo "Building reconf executable..."
+go build ..
+
+echo "Running tests..."
+fail=0
+
+rm -rf _out
+
+for testcase in test_*.sh; do
+    echo ""
+    echo "--- ${testcase}"
+
+    mkdir -p _out
+
+    if sh "${testcase}"; then
+        echo ">> PASS"
+    else
+        echo "!! FAIL"
+        fail=1
+    fi
+
+    rm -rf _out
+done
+
+exit ${fail}
