@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"os/exec"
+	"strings"
 	"text/template"
 
 	"github.com/docopt/docopt-go"
@@ -56,8 +56,9 @@ func main() {
 }
 
 func run(config Config) error {
+	envv := os.Environ()
 	vars := map[string]interface{}{
-		"env": environ(),
+		"env": mapEnviron(envv),
 	}
 
 	for _, filename := range config.Files {
@@ -69,20 +70,9 @@ func run(config Config) error {
 		}
 	}
 
-	cmd := exec.Command(config.Command[0], config.Command[1:]...)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	paths := strings.Split(os.Getenv("PATH"), ":")
 
-	if err := cmd.Run(); err != nil {
-		// Inherit exit code.
-		if exit, ok := err.(*exec.ExitError); ok {
-			os.Exit(exit.ExitCode())
-		}
-		return err
-	}
-
-	return nil
+	return execvpe(config.Command[0], paths, config.Command, envv)
 }
 
 // Generates file by rendering corresponding template.

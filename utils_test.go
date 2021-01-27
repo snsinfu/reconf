@@ -1,7 +1,7 @@
 package main
 
 import (
-	"os"
+	"reflect"
 	"testing"
 )
 
@@ -35,21 +35,34 @@ func Test_splitOnce(t *testing.T) {
 	}
 }
 
-func Test_environ(t *testing.T) {
-	key := "TEST_ENV_VAR"
-	expect := "96777b30-74a7-4c09-a13f-7dc2e11ebdaa"
-
-	if err := os.Setenv(key, expect); err != nil {
-		t.Fatalf("unexpected error: %v", err)
+func Test_mapEnviron(t *testing.T) {
+	testCases := []struct {
+		envv   []string
+		expect map[string]string
+	}{
+		{
+			[]string{},
+			map[string]string{},
+		},
+		{
+			[]string{"A="},
+			map[string]string{"A": ""},
+		},
+		{
+			[]string{"A=1", "ABC=123"},
+			map[string]string{"A": "1", "ABC": "123"},
+		},
+		{
+			[]string{"A=a=1,b=2"},
+			map[string]string{"A": "a=1,b=2"},
+		},
 	}
 
-	env := environ()
+	for _, testCase := range testCases {
+		actual := mapEnviron(testCase.envv)
 
-	actual, ok := env[key]
-	if !ok {
-		t.Errorf("key %q is not mapped", key)
-	}
-	if actual != expect {
-		t.Errorf("key %q is incorrect: %q, want %q", key, actual, expect)
+		if !reflect.DeepEqual(actual, testCase.expect) {
+			t.Errorf("incorrect result: %v, want %v", actual, testCase.expect)
+		}
 	}
 }

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"strings"
 )
 
@@ -14,11 +13,11 @@ func splitOnce(s, sep string) (string, string) {
 	return s[:pos], s[pos+1:]
 }
 
-// Returns a copy of the environment as a map.
-func environ() map[string]string {
+// Parses environment into a key-value map
+func mapEnviron(envv []string) map[string]string {
 	vars := map[string]string{}
 
-	for _, env := range os.Environ() {
+	for _, env := range envv {
 		key, value := splitOnce(env, "=")
 		vars[key] = value
 	}
