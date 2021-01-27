@@ -1,5 +1,7 @@
 echo "Should not overwrite file if not forced"
 
+set -e
+
 export VAR="1234567890"
 
 cat > _out/actual.template << 'END'

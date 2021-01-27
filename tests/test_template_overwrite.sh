@@ -1,5 +1,7 @@
 echo "Should overwrite file if forced"
 
+set -e
+
 export VAR
 
 cat > _out/actual.template << 'END'
