@@ -29,6 +29,8 @@ func execvpe(file string, paths, argv, envv []string) error {
 				continue
 			}
 		}
+
+		break
 	}
 
 	return err
