@@ -31,9 +31,10 @@ $ go build -o reconf github.com/snsinfu/reconf
 `reconf` is a statically-built CLI utility. It accepts the following flags:
 
 ```
-Usage: reconf [-f -w <file> ...] <command>...
+Usage: reconf [-f -w <file> ...] [<command>...]
 
-  <command>...   Command to execute.
+  <command>   Command to execute. If command is not given, reconf will
+              just generate files and exit.
 
 Options:
   -w, --render <file>  Generate <file> (if it does not exist) by rendering

@@ -11,9 +11,10 @@ import (
 )
 
 const usage = `Generate files and run command.
-Usage: reconf [-f -w <file> ...] <command>...
+Usage: reconf [-f -w <file> ...] [<command>...]
 
-  <command>...   Command to execute.
+  <command>   Command to execute. If command is not given, reconf will
+              just generate files and exit.
 
 Options:
   -w, --render <file>  Generate <file> (if it does not exist) by rendering
@@ -70,6 +71,13 @@ func run(config Config) error {
 		}
 	}
 
+	// Just render templates and exit if command is not given.
+	if len(config.Command) == 0 {
+		return nil
+	}
+
+	// We just require the command path to be absolute if PATH is empty or
+	// not set.
 	paths := strings.Split(os.Getenv("PATH"), ":")
 
 	return execvpe(config.Command[0], paths, config.Command, envv)
