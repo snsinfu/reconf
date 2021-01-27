@@ -80,10 +80,18 @@ Without the `-f` option, `reconf` skips to generate existing files.
 
 ## Test
 
+Run unit tests:
+
 ```console
 $ git clone https://github.com/snsinfu/reconf.git
 $ cd reconf
 $ go test .
+```
+
+Integration tests:
+
+```console
+$ tests/run
 ```
 
 
