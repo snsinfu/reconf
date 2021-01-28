@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"strings"
 	"text/template"
 )
@@ -35,5 +36,32 @@ var templateFuncs = template.FuncMap{
 	"after": func(sep, s string) string {
 		_, sub := splitOnce(s, sep)
 		return sub
+	},
+
+	// Removes empty strings from an array of strings.
+	"nonempty": func(arr []string) []string {
+		r := []string{}
+		for _, s := range arr {
+			if s != "" {
+				r = append(r, s)
+			}
+		}
+		return r
+	},
+
+	// Removes all leading and trailing white space of string. If an array of
+	// string is given, it works on all the elements.
+	"strip": func(arg interface{}) (interface{}, error) {
+		switch arg := arg.(type) {
+		case string:
+			return strings.TrimSpace(arg), nil
+		case []string:
+			r := []string{}
+			for _, s := range arg {
+				r = append(r, strings.TrimSpace(s))
+			}
+			return r, nil
+		}
+		return nil, errors.New("strip expects string or array of strings as an input")
 	},
 }

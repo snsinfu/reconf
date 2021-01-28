@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added template functions: `nonempty` and `strip`
+
+
 ## v0.1
 
 Initial release. Working features:
