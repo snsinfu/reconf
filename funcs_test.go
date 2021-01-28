@@ -47,63 +47,47 @@ func (testCases funcTestCases) Run(t *testing.T) {
 }
 
 func Test_templateFuncs_split(t *testing.T) {
-	src := `{{ $ | split ":" }}`
-	input := "quick:brown:fox:jumps"
-	expect := "[quick brown fox jumps]"
-
-	actual, err := render(src, input)
-
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+	testCases := funcTestCases{
+		{
+			`{{ $ | split ":" }}`,
+			"quick:brown:fox:jumps",
+			"[quick brown fox jumps]",
+		},
 	}
-	if actual != expect {
-		t.Fatalf("incorrect: %q, want %q", actual, expect)
-	}
+	testCases.Run(t)
 }
 
 func Test_templateFuncs_join(t *testing.T) {
-	src := `{{ $ | join ":" }}`
-	input := []string{"quick", "brown", "fox", "jumps"}
-	expect := "quick:brown:fox:jumps"
-
-	actual, err := render(src, input)
-
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+	testCases := funcTestCases{
+		{
+			`{{ $ | join ":" }}`,
+			[]string{"quick", "brown", "fox", "jumps"},
+			"quick:brown:fox:jumps",
+		},
 	}
-	if actual != expect {
-		t.Fatalf("incorrect: %q, want %q", actual, expect)
-	}
+	testCases.Run(t)
 }
 
 func Test_templateFuncs_before(t *testing.T) {
-	src := `{{ $ | before ":" }}`
-	input := "quick:brown:fox:jumps"
-	expect := "quick"
-
-	actual, err := render(src, input)
-
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+	testCases := funcTestCases{
+		{
+			`{{ $ | before ":" }}`,
+			"quick:brown:fox:jumps",
+			"quick",
+		},
 	}
-	if actual != expect {
-		t.Fatalf("incorrect: %q, want %q", actual, expect)
-	}
+	testCases.Run(t)
 }
 
 func Test_templateFuncs_after(t *testing.T) {
-	src := `{{ $ | after ":" }}`
-	input := "quick:brown:fox:jumps"
-	expect := "brown:fox:jumps"
-
-	actual, err := render(src, input)
-
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+	testCases := funcTestCases{
+		{
+			`{{ $ | after ":" }}`,
+			"quick:brown:fox:jumps",
+			"brown:fox:jumps",
+		},
 	}
-	if actual != expect {
-		t.Fatalf("incorrect: %q, want %q", actual, expect)
-	}
+	testCases.Run(t)
 }
 
 func Test_tempateFuncs_nonempty(t *testing.T) {
