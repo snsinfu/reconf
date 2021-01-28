@@ -10,7 +10,7 @@ func splitOnce(s, sep string) (string, string) {
 	if pos == -1 {
 		return s, ""
 	}
-	return s[:pos], s[pos+1:]
+	return s[:pos], s[pos+len(sep):]
 }
 
 // Parses environment into a key-value map

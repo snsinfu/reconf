@@ -21,6 +21,8 @@ func Test_splitOnce(t *testing.T) {
 
 		{"/", "/", "", ""},
 		{"", "/", "", ""},
+
+		{"1::2", "::", "1", "2"},
 	}
 
 	for _, testCase := range testCases {

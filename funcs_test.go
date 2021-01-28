@@ -50,7 +50,22 @@ func Test_templateFuncs_split(t *testing.T) {
 	testCases := funcTestCases{
 		{
 			`{{ $ | split ":" }}`,
+			"",
+			"[]",
+		},
+		{
+			`{{ $ | split ":" }}`,
+			"quick",
+			"[quick]",
+		},
+		{
+			`{{ $ | split ":" }}`,
 			"quick:brown:fox:jumps",
+			"[quick brown fox jumps]",
+		},
+		{
+			`{{ $ | split " <> " }}`,
+			"quick <> brown <> fox <> jumps",
 			"[quick brown fox jumps]",
 		},
 	}
@@ -61,8 +76,23 @@ func Test_templateFuncs_join(t *testing.T) {
 	testCases := funcTestCases{
 		{
 			`{{ $ | join ":" }}`,
+			[]string{},
+			"",
+		},
+		{
+			`{{ $ | join ":" }}`,
+			[]string{"quick"},
+			"quick",
+		},
+		{
+			`{{ $ | join ":" }}`,
 			[]string{"quick", "brown", "fox", "jumps"},
 			"quick:brown:fox:jumps",
+		},
+		{
+			`{{ $ | join " <> " }}`,
+			[]string{"quick", "brown", "fox", "jumps"},
+			"quick <> brown <> fox <> jumps",
 		},
 	}
 	testCases.Run(t)
@@ -72,7 +102,22 @@ func Test_templateFuncs_before(t *testing.T) {
 	testCases := funcTestCases{
 		{
 			`{{ $ | before ":" }}`,
+			"",
+			"",
+		},
+		{
+			`{{ $ | before ":" }}`,
+			"quick",
+			"quick",
+		},
+		{
+			`{{ $ | before ":" }}`,
 			"quick:brown:fox:jumps",
+			"quick",
+		},
+		{
+			`{{ $ | before " <> " }}`,
+			"quick <> brown <> fox <> jumps",
 			"quick",
 		},
 	}
@@ -83,8 +128,23 @@ func Test_templateFuncs_after(t *testing.T) {
 	testCases := funcTestCases{
 		{
 			`{{ $ | after ":" }}`,
+			"",
+			"",
+		},
+		{
+			`{{ $ | after ":" }}`,
+			"quick",
+			"",
+		},
+		{
+			`{{ $ | after ":" }}`,
 			"quick:brown:fox:jumps",
 			"brown:fox:jumps",
+		},
+		{
+			`{{ $ | after " <> " }}`,
+			"quick <> brown <> fox <> jumps",
+			"brown <> fox <> jumps",
 		},
 	}
 	testCases.Run(t)
