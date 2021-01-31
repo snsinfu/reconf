@@ -3,8 +3,8 @@
 [![Test Status][test-badge]][test-url]
 [![Release][release-badge]][release-url]
 
-`reconf` generates files from templates and executes a command using
-environment variables.
+`reconf` generates files from templates and environment variables and
+executes a command.
 
 - [Build](#build)
 - [Usage](#usage)
@@ -52,14 +52,14 @@ variables available as `{{ .env.NAME }}`.
 $ reconf -w /srv/nginx.conf nginx -c /srv/nginx.conf
 ```
 
-So, if the template contains the following `listen` stanza,
+So, if the template contains the following `listen` stanza
 
 ```
 listen {{.env.PORT}};
 ```
 
-...and if you export `PORT` environment variable, `reconf` interpolates the
-`listen` stanza to use the specified port number.
+and if you provide `PORT` environment variable, `reconf` interpolates the
+template part `{{.env.PORT}}` with the actual value:
 
 ```
 $ PORT=8080 reconf -w /srv/nginx.conf nginx -c /srv/nginx.conf
